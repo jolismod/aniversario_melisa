@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    
+    <meta property="og:title" content="❤️ Feliz Aniversario ❤️">
+    <meta property="og:description" content="Para la niña más hermosa de mi vida. ¡Te amo mucho!">
+    <meta property="og:image" content="https://tu-dominio.com/meli/f1.jpeg">
+    
+    <meta name="theme-color" content="#ff6b81">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <title>❤️ Feliz Aniversario ❤️</title>
+    
+    <!-- Librería para el confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ===== VARIABLES DE COLOR ===== */
+        :root {
+            /* 🎨 AQUÍ ESTÁ EL COLOR DE FONDO CLARO (Rosa suave) */
+            --bg-color: linear-gradient(135deg, #ffe6e6 0%, #ffb3c6 100%);
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --primary-color: #e63946;
+            --secondary-color: #ff6b81;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --menu-btn-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            /* 🌙 AQUÍ ESTÁ EL COLOR DE FONDO OSCURO (Rojo profundo) */
+            --bg-color: linear-gradient(135deg, #2b0f1c 0%, #4a1525 100%);
+            --text-color: #f1f1f1;
+            --card-bg: rgba(30, 30, 30, 0.95);
+            --primary-color: #ff6b81;
+            --secondary-color: #ff4757;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            --menu-btn-bg: #2a2a40;
+        }
+
+        /* ===== RESET Y ESTILOS BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* ===== SISTEMA DE VISTAS (Páginas) ===== */
+        .view-section {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== MENÚ PRINCIPAL ===== */
+        #main-menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .menu-content h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(230, 57, 70, 0.3);
+        }
+
+        .menu-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text-color);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .menu-btn {
+            background: var(--menu-btn-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.95);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* ===== CABECERA DE LAS VISTAS ===== */
+        .view-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(230, 57, 70, 0.2);
+        }
+
+        .view-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            flex-grow: 1;
+            text-align: center;
+            padding-right: 60px;
+        }
+
+        .back-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* ===== CONTENIDO DEL INICIO (Hero) ===== */
+        .hero-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+
+        .hero-img {
+            max-width: 280px;
+            width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .love-timer {
+            background: rgba(230, 57, 70, 0.1);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+            margin-top: 10px;
+        }
+
+        /* ===== CUADRÍCULA DE FOTOS ===== */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* ===== CARTAS ===== */
+        .letters-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .letter-container {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary-color);
+            text-align: left;
+        }
+
+        .letter-container h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+        }
+
+        .letter-container p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-family: 'Georgia', serif;
+            margin-bottom: 15px;
+        }
+
+        .letter-container .firma {
+            text-align: right;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+        }
+
+        /* ===== VENTANA FLOTANTE (POEMA + CORAZONES) ===== */
+        #poem-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #poem-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .poem-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 3px solid var(--primary-color);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-poem {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .poem-img-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        #poem-img {
+            max-width: 100%;
+            max-height: 40vh;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--primary-color);
+        }
+
+        #poem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            color: var(--text-color);
+            padding: 0 10px;
+        }
+
+        /* ===== ANIMACIÓN DE CORAZONES ALREDEDOR ===== */
+        .heart-particle {
+            position: absolute;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: heartBurst 1.5s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes heartBurst {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* ===== BOTONES FLOTANTES ===== */
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .float-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .float-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .menu-content h1 { font-size: 2rem; }
+            .menu-grid { grid-template-columns: 1fr; gap: 10px; }
+            .menu-btn { padding: 15px; font-size: 1.1rem; }
+            
+            .view-header { flex-direction: column; gap: 10px; }
+            .view-header h2 { padding-right: 0; font-size: 1.3rem; }
+            .back-btn { width: 100%; }
+            
+            .grid-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .card img { height: 150px; }
+            
+            #poem-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Música de fondo (Asegúrate de tener tu-cancion.mp3 o cámbialo) -->
+    <audio id="bg-music" loop>
+        <source src="Love Rapa.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botones Flotantes (Música y Tema) -->
+    <div class="floating-buttons">
+        <button class="float-btn" id="music-btn" onclick="toggleMusic()">🎵</button>
+        <button class="float-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+
+    <!-- ==================== 1. MENÚ PRINCIPAL ==================== -->
+    <div id="main-menu" class="view-section active">
+        <div class="menu-content">
+            <h1>❤️ Feliz Aniversario ❤️</h1>
+            <p>Un pequeño universo hecho para ti, mi amor.</p>
+            
+            <div class="menu-grid">
+                <button class="menu-btn" onclick="openCategory('inicio')">🏠 Inicio</button>
+                <button class="menu-btn" onclick="openCategory('cosas-meli')">🌷 Gustos</button>
+                <button class="menu-btn" onclick="openCategory('mi-prioridad')">👑 Prioridad</button>
+                <button class="menu-btn" onclick="openCategory('dibujo')">🎨 Dibujos</button>
+                <button class="menu-btn" onclick="openCategory('cartas')">💌 Cartas</button>
+                <button class="menu-btn" onclick="openCategory('regalos')">🎁 Regalos</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 2. VISTA DE GALERÍA (Fotos) ==================== -->
+    <div id="category-view" class="view-section">
+        <div class="view-header">
+            <button class="back-btn" onclick="goToMenu()">⬅ Volver al Menú</button>
+            <h2 id="category-title">Título</h2>
+        </div>
+        <div class="grid-container" id="photo-grid">
+            <!-- Las fotos se cargan dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <!-- ==================== 3. VISTA DE INICIO (Hero) ==================== -->
+    <div id="inicio-view" class="view-section">
+        <div class="view-header">
+            <button class="back-btn" onclick="goToMenu()">⬅ Volver al Menú</button>
+        </div>
+        <div class="hero-content">
+            <h1 id="typewriter"></h1>
+            <div class="love-timer" id="love-timer">aprx 5 a 6 meses</div>
+            <img src="meli/f1.jpeg" alt="portada" class="hero-img" onclick="showPoem(this)">
+            <p>❤️espero que te guste amor❤️</p>
+            <button class="cta-button" onclick="triggerConfetti()">❤️te amo❤️</button>
+        </div>
+    </div>
+
+    <!-- ==================== 4. VISTA DE CARTAS ==================== -->
+    <div id="cartas-view" class="view-section">
+        <div class="view-header">
+            <button class="back-btn" onclick="goToMenu()">⬅ Volver al Menú</button>
+            <h2>💌 Tus Cartas</h2>
+        </div>
+        <div class="letters-container">
+            <div class="letter-container">
+                <h3>Para mi novio 💌</h3>
+                <p>Gracias por darme el gusto de conocerte, pocas personas conocen mi forma educada pero contigo es algo que no se como explicarlo y que haces sentir una chica amada de una forma que nunca me dieron conocer hasta que llegaste tú y wow es la primera vez que siento algo de verdad con una persona que me ama y te agradezco por llegar a mi vida, gracias de verdad. Te amo mucho.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+
+            <div class="letter-container">
+                <h3>Para mi novio 💌</h3>
+                <p>Se que no soy perfecta pero yo te amo mucho mucho mi amor llegaste en mi vida cuando casi me destruyó yo misma y cada cosa que me dices y me demuestras es algo que no quiero olvidar tú eres mi mundo y te agradezco que a pesar de que tengo mis problemas tú nunca me dejaste tú no te fuiste de mi vida y te lo agradezco mi amor eres único y me alegra tenerte como novio me alegra que seamos novios se que a veces no lo demuestro pero créeme quiero cambiar eso para que vean que yo si encontré al amor de mi vida.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+
+            <div class="letter-container">
+                <h3>Para mi novio 💌</h3>
+                <p>Se que a veces no soy muy comunicativa contigo solo es de que no lo hago con muchas personas y la verdad me cuesta abrirme a las personas, y muchas gracias por ser paciente conmigo. La verdad tú eres el único que me hace sentir alguien que de verdad si es amada y no solo con palabras lo demuestras mucho y eso amo de ti y muchas cosas, gracias gracias por ser mi novio eres el mejor. Te amo mucho mi amor.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+
+            <div class="letter-container">
+                <h3>Para mi novio 💌</h3>
+                <p>Amor ya se que hoy no vas a estar conmigo pero sabes algo a pesar de que no vamos a estar juntos yo pensare en ti, bueno siempre pienso en ti verdad pero bueno espero que te estén gustando mis cartas que te escribo y plan era hacerte unas cartas hechas a mano pero no se pudo, bueno pero espero que en un futuro te haga más te amo mucho mi amor nos vemos hasta el lunes. Una pregunta amor seguro que quieres estar conmigo es que siento que soy egoísta y que siempre la que está hablando mucho soy yo.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+
+            <div class="letter-container">
+                <h3>Para mi novio 💌</h3>
+                <p>Llegaste a mi vida cuando más lo necesitaba y a veces pienso que si te cuento mis cosas te vas a ir de mi vida pero me lo demuestras con las cosas que dices y con las cosas que me demuestras en serio amor mucha gracias por llegar a mi vida tú me haces sentir una persona querida amada contigo soy honesta en mis sentimientos y la verdad agradezco que estés en mi vida eres el mejor novio de mi vida y espero tener muy buenos momentos contigo y estar contigo el resto de mi vida. Te amo mucho mi amor nunca lo olvidé.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+
+            <div class="letter-container">
+                <h3>Última Carta 💌</h3>
+                <p>Esta carta será la última de este año cada vez que cumplas años te voy a escribir 7 cartas antes de tu cumpleaños, espero que todo el tiempo que estemos juntos tengamos unos recuerdos muy hermosos amor te amo mucho mucho gracias por llegar a mi vida, en cada cosa que hagas estaré orgullosa amor en todo lo que hagas te apoyare en todas tus decisiones yo estaré a tu lado si necesitas algo me avisas para estar contigo amor. Te amo mucho mucho mucho amor.</p>
+                <div class="firma">Con amor, Meli ❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 5. VENTANA FLOTANTE DEL POEMA ==================== -->
+    <div id="poem-overlay">
+        <div class="poem-box">
+            <button class="close-poem" onclick="closePoem()">✕</button>
+            <div class="poem-img-container" id="heart-container">
+                <img id="poem-img" src="" alt="Recuerdo">
+            </div>
+            <p id="poem-text"></p>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT (Lógica) ==================== -->
+    <script>
+        // ===== 1. DATOS DE LA GALERÍA (Fotos y Poemas) =====
+        const galleryData = {
+            'cosas-meli': [
+                { src: 'meli/loto.jfif', poem: 'Como la flor de loto, te elevas sobre cualquier obstáculo, hermosa y radiante en medio de todo. Eres pura y bella.' },
+                { src: 'meli/astro.jpeg', poem: 'Aunque el universo sea infinito y esté lleno de estrellas, mi lugar favorito siempre será a tu lado.' },
+                { src: 'meli/ger.jpg', poem: 'Tus colores favoritos iluminan mis días, recordándome lo mucho que te amo y lo feliz que me haces.' },
+                { src: 'meli/regal1.jpeg', poem: 'Cada regalo es un pedacito de mi corazón que te entrego con todo mi amor. Espero que te guste mucho.' }
+            ],
+            'mi-prioridad': [
+                { src: 'meli/f1.jpeg', poem: 'Eres mi prioridad número uno, mi pensamiento constante y la razón de mi sonrisa.' },
+                { src: 'meli/f3.jpeg', poem: 'Cada vez que te miro, me enamoro de nuevo de la persona tan maravillosa que eres.' },
+                { src: 'meli/f4.jpeg', poem: 'Eres la dueña de mis pensamientos y la reina de mi corazón. Te amo muchísimo.' },
+                { src: 'meli/f5.jpeg', poem: 'No importa cuánto tiempo pase, siempre quiero estar a tu lado, mi amor.' },
+                { src: 'meli/f6.jpeg', poem: 'Eres mi mundo entero, la persona que le da sentido a todo lo que hago.' },
+                { src: 'meli/f7.jpeg', poem: 'Mi todo, mi nada, mi universo. Eres el mejor regalo que la vida me ha dado.' },
+                { src: 'meli/f8.jpeg', poem: 'La más hermosa de todas. Tu belleza no solo es exterior, sino también la de tu corazón.' },
+                { src: 'meli/f9.jpeg', poem: 'Cada día a tu lado es un regalo que atesoro en mi corazón. Eres mi persona favorita.' },
+                { src: 'meli/ft10.jpg', poem: 'No importa la distancia ni el tiempo, siempre te llevo conmigo en cada latido de mi corazón.' },
+                { src: 'meli/ft11.jpg', poem: 'Eres la razón por la que creo en el amor verdadero. Gracias por existir.' },
+                { src: 'meli/ft12.jpg', poem: 'A tu lado, cualquier lugar es mi hogar. Eres mi refugio seguro.' },
+                { src: 'meli/ft13.jpg', poem: 'Tus ojos son mi lugar favorito para perderme, y tu sonrisa mi motivo para sonreír.' },
+                { src: 'meli/ft14.jpg', poem: 'Cada momento contigo es un tesoro que guardo en el alma. Te amo infinitamente.' },
+                { src: 'meli/ft15.jpg', poem: 'Me encanta cada detalle de ti, desde tu forma de hablar hasta tu hermosa sonrisa.' },
+                { src: 'meli/ft16.jpg', poem: 'Si pudiera pedir un deseo, pediría pasar toda una eternidad a tu lado.' },
+                { src: 'meli/ft17.jpg', poem: 'Gracias por llegar a mi vida y llenarla de luz, de amor y de momentos inolvidables.' },
+                { src: 'meli/ft18.jpg', poem: 'Contigo he aprendido que el amor verdadero existe y que se siente tan bonito como esto.' },
+                { src: 'meli/ft19.jpg', poem: 'Eres esa persona especial que hace que todo lo malo desaparezca cuando estoy contigo.' },
+                { src: 'meli/ft20.jpg', poem: 'Te amo no solo por lo que eres, sino por lo que soy cuando estoy a tu lado.' },
+                { src: 'meli/ft21.jpg', poem: 'Nuestro amor es mi historia favorita, y espero seguir escribiendo páginas contigo.' }
+            ],
+            'dibujo': [
+                { src: 'meli/dibujo1.jpeg', poem: 'Tu arte refleja la belleza de tu alma, y yo soy muy afortunado de poder admirarlo.' },
+                { src: 'meli/dibujo2.jpeg', poem: 'Cada trazo que haces está lleno de magia, al igual que cada momento que compartimos.' },
+                { src: 'meli/dibujo3.jpeg', poem: 'Me fascina tu creatividad y la forma en que ves el mundo. Eres increíble.' },
+                { src: 'meli/dibujo4.jpeg', poem: 'Dibujas maravillas, pero la obra de arte más hermosa eres tú misma.' },
+                { src: 'meli/dibujo5.jpeg', poem: 'Tan hermosa como las flores que dibujas, y con un corazón aún más bonito.' },
+                { src: 'meli/dibujo6.jpeg', poem: 'Para mí eres una estrella que brilla con luz propia, guiando mi camino.' },
+                { src: 'meli/collas1.jpeg', poem: 'Un regalito hecho con mucho esfuerzo y amor, pensando siempre en hacerte feliz.' },
+                { src: 'meli/collas2.jpeg', poem: 'Todo lo que hago por ti está hecho con amor, porque te lo mereces todo.' },
+                { src: 'meli/collas3.jpeg', poem: 'Eres mi persona amada, mi estrella favorita en este vasto universo.' },
+                { src: 'meli/midibujo.jpeg', poem: 'Hice este dibujo pensando en ti, espero que te guste tanto como a mí me gustas tú.' }
+            ],
+            'regalos': [
+                { src: 'meli/car1.jpeg', poem: 'Nuestros momentos juntos son el mejor regalo de todos, y este es solo un pequeño detalle.' },
+                { src: 'meli/car2.jpeg', poem: 'Espero que este detalle te recuerde lo mucho que te amo y lo importante que eres para mí.' },
+                { src: 'meli/car3.jpeg', poem: 'Cada detalle que tengo contigo es un reflejo de mi amor por ti.' },
+                { src: 'meli/car4.jpeg', poem: 'Me encanta verte feliz, y haré todo lo posible por sacarte una sonrisa siempre.' },
+                { src: 'meli/car5.jpeg', poem: 'Un pequeño obsequio para una persona gigante en mi corazón.' },
+                { src: 'meli/car6.jpeg', poem: 'Gracias por recibir cada uno de mis detalles con tanto amor. Te amo.' }
+            ]
+        };
+
+        // ===== 2. FUNCIONES DE NAVEGACIÓN =====
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToMenu() {
+            showView('main-menu');
+            document.getElementById('photo-grid').innerHTML = '';
+        }
+
+        function openCategory(category) {
+            if (category === 'inicio') {
+                showView('inicio-view');
+                typeWriter();
+                return;
+            }
+            if (category === 'cartas') {
+                showView('cartas-view');
+                return;
+            }
+
+            const grid = document.getElementById('photo-grid');
+            const title = document.getElementById('category-title');
+            
+            const titles = {
+                'cosas-meli': '🌷 Cosas que te gustan',
+                'mi-prioridad': '👑 Mi Prioridad',
+                'dibujo': '🎨 Tus Dibujos',
+                'regalos': '🎁 Nuestros Regalos'
+            };
+            title.textContent = titles[category] || 'Galería';
+
+            grid.innerHTML = '';
+            if (galleryData[category]) {
+                galleryData[category].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${item.src}" alt="Recuerdo" data-poem="${item.poem}" onclick="showPoem(this)">
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            showView('category-view');
+        }
+
+        // ===== 3. FUNCIÓN PARA MOSTRAR EL POEMA Y LOS CORAZONES =====
+        function showPoem(imgElement) {
+            const overlay = document.getElementById('poem-overlay');
+            const poemImg = document.getElementById('poem-img');
+            const poemText = document.getElementById('poem-text');
+            const heartContainer = document.getElementById('heart-container');
+
+            poemImg.src = imgElement.src;
+            const poem = imgElement.getAttribute('data-poem') || "Eres lo más hermoso que me ha pasado. Te amo con todo mi corazón.";
+            poemText.innerText = poem;
+
+            overlay.classList.add('active');
+
+            heartContainer.querySelectorAll('.heart-particle').forEach(h => h.remove());
+
+            const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '♥️'];
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 80 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                heart.style.setProperty('--tx', `${tx}px`);
+                heart.style.setProperty('--ty', `${ty}px`);
+                heart.style.animationDelay = `${Math.random() * 0.3}s`;
+                
+                heartContainer.appendChild(heart);
+            }
+
+            triggerConfetti();
+        }
+
+        function closePoem() {
+            document.getElementById('poem-overlay').classList.remove('active');
+        }
+
+        // ===== 4. EFECTOS Y UTILIDADES =====
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggleBtn = document.getElementById('theme-toggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                toggleBtn.textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                toggleBtn.textContent = '☀️';
+            }
+        }
+
+        let isPlaying = false;
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (isPlaying) {
+                music.pause();
+                btn.textContent = '🎵';
+            } else {
+                music.play().catch(e => console.log("El navegador bloqueó el autoplay"));
+                btn.textContent = '⏸️';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        let i = 0;
+        let typingTimeout;
+        function typeWriter() {
+            const text = "❤️ La niña más hermosa que verás el resto de tu vida ❤️";
+            const element = document.getElementById("typewriter");
+            if (!element) return;
+            
+            element.innerHTML = "";
+            i = 0;
+            clearTimeout(typingTimeout);
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    typingTimeout = setTimeout(type, 100);
+                }
+            }
+            type();
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#e63946', '#ff6b81', '#ff4757', '#ff1493']
+            });
+        }
+
+        const startDate = new Date(2022, 0, 1);
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const timerElement = document.getElementById('love-timer');
+            if (timerElement) {
+                timerElement.innerHTML = `❤️ Juntos desde hace: <br> ${days} días, ${hours} horas y ${minutes} min ❤️`;
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = ['❤️', '💖', '💕', '💗'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.position = 'fixed';
+            heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+            heart.style.animation = `floatHeart ${Math.random() * 2 + 4}s ease-out forwards`;
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '0';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimer();
+            setInterval(createFloatingHeart, 1200);
+            
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes floatHeart {
+                    0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(-100vh) scale(1.5) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</htm>

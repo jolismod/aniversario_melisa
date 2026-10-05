@@ -1,0 +1,412 @@
+/* ===== VARIABLES DE COLOR ===== */
+:root {
+    --bg-color: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    --text-color: #333;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --header-bg: rgba(255, 255, 255, 0.9);
+    --primary-color: #e63946;
+    --secondary-color: #ff6b81;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --menu-btn-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg-color: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --text-color: #f1f1f1;
+    --card-bg: rgba(30, 30, 30, 0.95);
+    --header-bg: rgba(20, 20, 20, 0.9);
+    --primary-color: #ff6b81;
+    --secondary-color: #ff4757;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --menu-btn-bg: #2a2a40;
+}
+
+/* ===== RESET Y ESTILOS BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', 'Segoe UI', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* ===== SISTEMA DE VISTAS (Páginas) ===== */
+.view-section {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+    animation: fadeIn 0.4s ease;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== MENÚ PRINCIPAL ===== */
+#main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.menu-content {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+.menu-content h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(230, 57, 70, 0.3);
+}
+
+.menu-content p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: var(--text-color);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.menu-btn {
+    background: var(--menu-btn-bg);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+.menu-btn:active {
+    transform: scale(0.95);
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ===== CABECERA DE LAS VISTAS ===== */
+.view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(230, 57, 70, 0.2);
+}
+
+.view-header h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    flex-grow: 1;
+    text-align: center;
+    padding-right: 60px; /* Para equilibrar el botón */
+}
+
+.back-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.back-btn:active {
+    transform: scale(0.9);
+}
+
+/* ===== CONTENIDO DEL INICIO (Hero) ===== */
+.hero-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    min-height: 60px;
+}
+
+.hero-img {
+    max-width: 280px;
+    width: 100%;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+    box-shadow: var(--shadow);
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.love-timer {
+    background: rgba(230, 57, 70, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+    margin-top: 10px;
+}
+
+/* ===== CUADRÍCULA DE FOTOS ===== */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.card:active {
+    transform: scale(0.95);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.card h3 {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* ===== CARTAS ===== */
+.letters-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.letter-container {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+    border-left: 5px solid var(--primary-color);
+    text-align: left;
+}
+
+.letter-container h3 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+}
+
+.letter-container p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-family: 'Georgia', serif;
+    margin-bottom: 15px;
+}
+
+.letter-container .firma {
+    text-align: right;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+}
+
+/* ===== VENTANA FLOTANTE (POEMA + CORAZONES) ===== */
+#poem-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#poem-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.poem-box {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--primary-color);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-poem {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.poem-img-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+#poem-img {
+    max-width: 100%;
+    max-height: 40vh;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--primary-color);
+}
+
+#poem-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    color: var(--text-color);
+    padding: 0 10px;
+}
+
+/* ===== ANIMACIÓN DE CORAZONES ALREDEDOR ===== */
+.heart-particle {
+    position: absolute;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: heartBurst 1.5s ease-out forwards;
+    z-index: 10;
+}
+
+@keyframes heartBurst {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ===== BOTONES FLOTANTES ===== */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
+}
+
+.float-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.float-btn:active {
+    transform: scale(0.9);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .menu-content h1 { font-size: 2rem; }
+    .menu-grid { grid-template-columns: 1fr; gap: 10px; }
+    .menu-btn { padding: 15px; font-size: 1.1rem; }
+    
+    .view-header { flex-direction: column; gap: 10px; }
+    .view-header h2 { padding-right: 0; font-size: 1.3rem; }
+    .back-btn { width: 100%; }
+    
+    .grid-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .card img { height: 150px; }
+    
+    #poem-text { font-size: 1rem; }
+}
